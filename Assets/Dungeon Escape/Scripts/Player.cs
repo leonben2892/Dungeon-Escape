@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private LayerMask ground; //Can use bit shift or this options as a variable
     private bool resetJump = false;
-    private float speed = 2.5f;
+    private float speed = 3f;
 
     private PlayerAnimation playerAnim;
     private SpriteRenderer playerSprite;
@@ -33,12 +33,15 @@ public class Player : MonoBehaviour
     {
         float move = Input.GetAxisRaw("Horizontal");
 
+        IsGrounded();
+
         FlipPlayer(move);
 
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() == true)
         {
             rigid.velocity = new Vector2(rigid.velocity.x, jumpForce);
             StartCoroutine(ResetJumpRoutine());
+            playerAnim.Jump(true);
         }
 
         rigid.velocity = new Vector2(move * speed, rigid.velocity.y);
@@ -47,11 +50,15 @@ public class Player : MonoBehaviour
 
     bool IsGrounded()
     {
-        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down, 0.7f, 1 << 8);
-        if(hitInfo.collider != null)
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down, 1f, 1 << 8);
+        //Debug.DrawRay(transform.position, Vector2.down, Color.green);
+        if (hitInfo.collider != null)
         {
             if(resetJump == false)
+            {
+                playerAnim.Jump(false);
                 return true;
+            }
         }
 
         return false;
