@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     private PlayerAnimation playerAnim;
     private SpriteRenderer playerSprite;
+    private SpriteRenderer swordArcSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -21,12 +22,18 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<PlayerAnimation>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
+        swordArcSprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Movement();
+
+        if(Input.GetMouseButtonDown(0) && IsGrounded() == true)
+        {
+            playerAnim.Attack();
+        }
     }
 
     void Movement()
@@ -69,10 +76,12 @@ public class Player : MonoBehaviour
         if(move > 0)
         {
             playerSprite.flipX = false;
+            swordArcSprite.flipY = false;
         }
         else if(move < 0)
         {
             playerSprite.flipX = true;
+            swordArcSprite.flipY = true;
         }
     }
 
