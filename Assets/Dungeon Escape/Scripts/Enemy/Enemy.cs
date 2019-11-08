@@ -17,10 +17,15 @@ public abstract class Enemy : MonoBehaviour
     protected Animator anim;
     protected SpriteRenderer sprite;
 
+    protected bool IsHit = false;
+
+    protected Player player;
+
     public virtual void Init()
     {
         anim = GetComponentInChildren<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     private void Start()
@@ -30,7 +35,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Update()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && anim.GetBool("InCombat") == false)
         {
             return;
         }
@@ -51,8 +56,17 @@ public abstract class Enemy : MonoBehaviour
             currentTarget = pointA.position;
             anim.SetTrigger("Idle");
         }
+        if(IsHit == false)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
+        }
 
-        transform.position = Vector3.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
+        float distance = Vector3.Distance(transform.localPosition, player.transform.localPosition);
+        if(distance > 2.0f)
+        {
+            IsHit = false;
+            anim.SetBool("InCombat", false);
+        }
     }
 
     void Flip()

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     private Rigidbody2D rigid;
     [SerializeField] //Allow to change the variable value in the inspector
@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     private PlayerAnimation playerAnim;
     private SpriteRenderer playerSprite;
     private SpriteRenderer swordArcSprite;
+
+    public int Health { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -92,5 +94,8 @@ public class Player : MonoBehaviour
         resetJump = false;
     }
 
-
+    public void Damage()
+    {
+        Debug.Log("Player dmg called");
+    }
 }
