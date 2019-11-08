@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\Dungeon Escape\Scripts\Enemy\Enemy.cs" />
     <Compile Include="Assets\Dungeon Escape\Scripts\Enemy\MossGiant.cs" />
+    <Compile Include="Assets\Dungeon Escape\Scripts\Enemy\Skeleton.cs" />
     <Compile Include="Assets\Dungeon Escape\Scripts\Enemy\Spider.cs" />
     <Compile Include="Assets\Dungeon Escape\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Dungeon Escape\Scripts\Player\PlayerAnimation.cs" />
