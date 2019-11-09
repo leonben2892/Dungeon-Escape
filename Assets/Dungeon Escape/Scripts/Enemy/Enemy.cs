@@ -16,6 +16,7 @@ public abstract class Enemy : MonoBehaviour
     protected Vector3 currentTarget;
     protected Animator anim;
     protected SpriteRenderer sprite;
+    protected bool IsDead = false;
 
     protected bool IsHit = false;
 
@@ -39,7 +40,8 @@ public abstract class Enemy : MonoBehaviour
         {
             return;
         }
-        Movement();
+        if(IsDead == false)
+            Movement();
     }
 
     public virtual void Movement()
