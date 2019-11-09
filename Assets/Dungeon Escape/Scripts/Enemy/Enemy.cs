@@ -67,6 +67,8 @@ public abstract class Enemy : MonoBehaviour
             IsHit = false;
             anim.SetBool("InCombat", false);
         }
+
+        FlipInCombat();
     }
 
     void Flip()
@@ -78,6 +80,19 @@ public abstract class Enemy : MonoBehaviour
         else
         {
             sprite.flipX = false;
+        }
+    }
+
+    void FlipInCombat()
+    {
+        Vector3 direction = player.transform.localPosition - transform.localPosition;
+        if (direction.x > 0 && anim.GetBool("InCombat") == true)
+        {
+            sprite.flipX = false;
+        }
+        else if (direction.x < 0 && anim.GetBool("InCombat") == true)
+        {
+            sprite.flipX = true;
         }
     }
 
